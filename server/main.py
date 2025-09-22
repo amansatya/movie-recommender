@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Configure CORS
 origins = [
     "http://localhost:5173",
     "http://localhost:3000"
