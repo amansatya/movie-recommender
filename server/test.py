@@ -1,9 +1,9 @@
 import asyncio
-from tmdb_api import search_movies  # make sure this matches your filename
+from tmdb_api import search_movies
 from tabulate import tabulate
 
 async def main():
-    query = "action"  # change to any mood/genre you want to test
+    query = "action"  # Change to any mood/genre
     movies = await search_movies(query)
 
     table_data = []
@@ -23,3 +23,12 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+# from gemini_api import get_suggested_genres
+#
+# user_input = "I feel like watching something thrilling and fun"
+#
+# suggestions = get_suggested_genres(user_input)
+#
+# print("Suggested genres/themes:", suggestions)
