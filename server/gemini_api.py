@@ -1,38 +1,24 @@
 import os
 from dotenv import load_dotenv
-from google import genai
+import google.generativeai as genai
 
 load_dotenv()
-
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY
-
-client = genai.Client()
+GEN_API_KEY = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=GEN_API_KEY)
 
 def get_suggested_genres(user_input: str):
     try:
         prompt = f"""Based on this user input: "{user_input}"
-
-        Suggest exactly 3–5 movie genres that best match their mood or preferences.
-        Return only the genres as a comma-separated list with no extra text.
-
-        Examples:
-        - Action, Thriller, Adventure
-        - Romance, Comedy, Drama
-        - Horror, Mystery, Suspense
-
-        User input: {user_input}
-        Genres:"""
-
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-
-        suggestions_text = response.text.strip()
-        suggestions = [s.strip("- ").strip() for s in suggestions_text.split(",") if s.strip()]
+Suggest exactly 3-5 popular movie genres that best match their mood or preferences.
+Return ONLY the genres as a comma-separated list, no extra text.
+Examples: Action, Comedy, Drama, Romance, Thriller, Horror, Adventure, Fantasy, Sci-Fi, Animation, Family, Crime, Mystery, War, Biography
+"""
+        model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        suggestions = [g.strip("- ").strip() for g in text.split(",") if g.strip()]
         return suggestions[:5]
 
     except Exception as e:
         print(f"Error interacting with Gemini API: {e}")
-        return []
+        return ["Adventure", "Comedy", "Action"]
