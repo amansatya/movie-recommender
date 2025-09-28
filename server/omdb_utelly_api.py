@@ -5,14 +5,17 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
-TMDB_API_KEY = os.getenv("TMDB_API_KEY")
-BASE_URL = "https://api.themoviedb.org/3"
+
+OMDB_API_KEY = os.getenv("OMDB_API_KEY")
+UTELLY_API_KEY = os.getenv("UTELLY_API_KEY")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 
 GENRE_IDS = {
     'Action': 28, 'Adventure': 12, 'Animation': 16, 'Comedy': 35, 'Crime': 80,
     'Documentary': 99, 'Drama': 18, 'Family': 10751, 'Fantasy': 14, 'History': 36,
-    'Horror': 27, 'Music': 10402, 'Mystery': 9648, 'Romance': 10749, 'Science Fiction': 878,
-    'TV Movie': 10770, 'Thriller': 53, 'War': 10752, 'Western': 37, 'Sci-Fi': 878
+    'Horror': 27, 'Music': 10402, 'Mystery': 9648, 'Romance': 10749, 'Science Fiction': 878,'TV Movie': 10770, 'Thriller': 53, 'War': 10752, 'Western': 37, 'Sci-Fi': 878
 }
 
 async def fetch_movie_details(client: httpx.AsyncClient, movie, current_year):
@@ -62,6 +65,7 @@ async def fetch_movie_details(client: httpx.AsyncClient, movie, current_year):
         return None
 
 async def search_movies(query: str, limit: int = 6):
+    print("🔑 TMDB API KEY in use:", TMDB_API_KEY)
     current_year = datetime.now().year
     async with httpx.AsyncClient(timeout=45.0) as client:
         try:

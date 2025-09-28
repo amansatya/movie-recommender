@@ -1,5 +1,5 @@
 import asyncio
-from tmdb_api import search_movies
+from omdb_utelly_api import search_movies
 from gemini_api import get_suggested_genres
 
 
