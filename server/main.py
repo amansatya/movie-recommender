@@ -20,14 +20,14 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Movie Recommender API",
     version="1.0",
-    description="Backend API for Movie Recommender (Gemini + TMDB)"
+    description="Backend API for Movie Recommender (Gemini + OMDb + Utelly + YouTube)"
 )
 
 # -------------------------
 # CORS Setup (frontend allowed)
 # -------------------------
 origins = [
-    "http://localhost:5173",  # Vite default
+    "http://localhost:5173",  # Vite default (frontend dev)
     "http://localhost:3000",  # CRA default
 ]
 app.add_middleware(
@@ -60,31 +60,33 @@ async def ping():
 @app.post("/recommend")
 async def recommend_movies_endpoint(user_input: UserInput):
     try:
-        logger.info(f"Received request: {user_input.mood_or_genre}")
+        logger.info(f"🎬 Received request for mood/genre: {user_input.mood_or_genre}")
 
-        # Simulate 2-min delay if requested
+        # Step 1: Optional artificial delay (only when testing simulate_delay = True)
         if user_input.simulate_delay:
-            logger.info("Simulating 2-minute delay...")
+            logger.info("⏳ Simulating 2-minute delay before recommendations...")
             await asyncio.sleep(120)
 
-        # Get movie recommendations
-        movies = await generate_recommendations(user_input.mood_or_genre)
+        # Step 2: Generate recommendations
+        movies = await generate_recommendations(user_input.mood_or_genre, max_movies=6)
 
+        # Step 3: Handle empty results
         if not movies:
+            logger.warning("⚠️ No movies found for this query.")
             return {"message": "No movies found for your input."}
 
-        logger.info(f"Returning {len(movies)} movies")
+        logger.info(f"✅ Returning {len(movies)} movies")
         return {"movies": movies}
 
     except Exception as e:
-        logger.error(f"Error in recommendation endpoint: {e}")
+        logger.error(f"💥 Error in recommendation endpoint: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
 # -------------------------
-# Run Server
+# Run Server (Dev Mode)
 # -------------------------
 if __name__ == "__main__":
     import uvicorn
-    logger.info("Starting FastAPI server on http://127.0.0.1:8000/ping")
+    logger.info("🚀 Starting FastAPI server at http://127.0.0.1:8000/ping")
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
