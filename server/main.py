@@ -50,7 +50,7 @@ async def recommend_movies_endpoint(user_input: UserInput):
 
         if not movies:
             logger.warning("⚠️ No movies found for this query.")
-            return {"message": "No movies found for your input."}
+            return {"movies": [], "message": "No movies found"}
 
         logger.info(f"✅ Returning {len(movies)} movies")
         return {"movies": movies}
