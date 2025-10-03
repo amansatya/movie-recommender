@@ -1,11 +1,5 @@
 import { useState } from "react";
 
-/**
- * Props:
- *  - onSubmit: function(mood: string) => void
- *  - placeholder?: string
- *  - disabled?: boolean
- */
 export default function InputBar({ onSubmit, placeholder = "Enter mood or genre...", disabled = false }) {
     const [value, setValue] = useState("");
 
@@ -14,7 +8,7 @@ export default function InputBar({ onSubmit, placeholder = "Enter mood or genre.
         const trimmed = value.trim();
         if (!trimmed || !onSubmit) return;
         onSubmit(trimmed);
-        setValue(""); // clear input after submit
+        setValue("");
     };
 
     return (

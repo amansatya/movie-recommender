@@ -21,7 +21,6 @@ export default function MovieCard({ movie }) {
 
     return (
         <>
-            {/* Card Preview */}
             <article
                 className="bg-white/5 rounded-2xl overflow-hidden shadow-md flex flex-col cursor-pointer hover:scale-105 transition-transform duration-300"
                 onClick={() => setIsOpen(true)}
@@ -76,7 +75,6 @@ export default function MovieCard({ movie }) {
                 </div>
             </article>
 
-            {/* Modal Overlay */}
             {isOpen && (
                 <div
                     className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-auto"
@@ -87,7 +85,6 @@ export default function MovieCard({ movie }) {
                                    [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-indigo-600 [&::-webkit-scrollbar-thumb]:rounded-full my-8"
                         onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside modal
                     >
-                        {/* Close Button */}
                         <button
                             onClick={() => setIsOpen(false)}
                             className="absolute top-4 right-4 text-white text-2xl hover:text-indigo-500 transition-colors z-10"
@@ -96,14 +93,12 @@ export default function MovieCard({ movie }) {
                         </button>
 
                         <div className="flex flex-col lg:flex-row">
-                            {/* Poster */}
                             {hasPoster && (
                                 <div className="lg:w-1/2 h-96 lg:h-auto bg-black flex items-center justify-center flex-shrink-0">
                                     <img src={poster} alt={`${title} poster`} className="w-full h-full object-contain" />
                                 </div>
                             )}
 
-                            {/* Details */}
                             <div className="lg:w-1/2 p-6 flex flex-col text-white overflow-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-indigo-500 [&::-webkit-scrollbar-thumb]:rounded-full">
                                 <h2 className="text-2xl font-bold mb-2">{title} <span className="text-gray-400 text-base">({year || "—"})</span></h2>
                                 <p className="text-gray-300 mb-2"><strong>Genre:</strong> {genre || "Unknown"}</p>

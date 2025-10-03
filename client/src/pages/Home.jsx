@@ -4,7 +4,6 @@ import InputBar from "../components/InputBar";
 import Loader from "../components/Loader";
 import MovieCard from "../components/MovieCard";
 
-/* Mock data to test MovieCard layout quickly */
 const mockMovies = [
     {
         imdb_id: "tt0111161",
@@ -18,7 +17,6 @@ const mockMovies = [
         ott_platforms: ["Netflix", "Prime Video"],
         trailer: "https://www.youtube.com/watch?v=NmzuHjWmXOc"
     },
-    // ... add up to 6 mock items if you like
 ];
 
 export default function Home() {
@@ -28,9 +26,7 @@ export default function Home() {
     const handleSearch = async (mood) => {
         setLoading(true);
         setMovies([]);
-        // simulate backend processing time (2s here — replace with real fetch)
         await new Promise((r) => setTimeout(r, 2000));
-        // for now, return mock data
         setMovies(mockMovies);
         setLoading(false);
     };
